@@ -1,12 +1,13 @@
 import express from "express";
 import Asset from "../models/Asset.js";
-import { verifyToken } from "../middleware/auth.js";
+import { authorizeRoles, verifyToken } from "../middleware/auth.js";
+import { createAsset, deleteAsset, getAssets, updateAsset } from "../controllers/assetController.js";
 
 const router = express.Router();
 
-router.get("/", verifyToken, async(req, res) => res.json(await Asset.find()));
-router.post("/", verifyToken, async(req, res) => res.json(await Asset.create(req.body)));
-router.put("/:id", verifyToken, async(req, res) => res.json(await Asset.findByIdAndUpdate(req.params.id, req.body, { new: true })));
-router.delete("/:id", verifyToken, async(req, res) => { await Asset.findByIdAndDelete(req.params.id); res.json({ message: "Deleted" }); });
+router.get("/", verifyToken, getAssets);
+router.post("/", verifyToken, authorizeRoles("admin", "tech"), createAsset);
+router.put("/:id", verifyToken, authorizeRoles("admin", "tech"), updateAsset);
+router.delete("/:id", verifyToken, authorizeRoles("admin", "tech"), deleteAsset);
 
 export default router;
