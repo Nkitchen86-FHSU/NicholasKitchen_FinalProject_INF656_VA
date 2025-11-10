@@ -1,4 +1,4 @@
-import Asset from "../models/Asset";
+import Asset from "../models/Asset.js";
 
 // GET all assets
 export const getAssets = async (req, res) => {
