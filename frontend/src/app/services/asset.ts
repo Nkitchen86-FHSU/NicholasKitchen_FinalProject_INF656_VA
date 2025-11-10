@@ -7,9 +7,8 @@ export class Asset {
 
   constructor(private http: HttpClient) {}
 
-  getAssets(token: string) {
-    return this.http.get(this.apiUrl, {
-      headers: { Authorization: `Bearer ${token}`}
-    });
-  }
+  getAssets() { return this.http.get(this.apiUrl); }
+  createAsset(data: any) { return this.http.post(this.apiUrl, data); }
+  updateAsset(id: string, data: any) { return this.http.put(`${this.apiUrl}/${id}`, data); }
+  deleteAsset(id: string) {return this.http.delete(`${this.apiUrl}/${id}`); }
 }
