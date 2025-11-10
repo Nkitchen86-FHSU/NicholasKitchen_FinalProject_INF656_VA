@@ -1,5 +1,5 @@
 import express from "express";
-import Asset from "../models/Asset";
+import Asset from "../models/Asset.js";
 import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
