@@ -1,5 +1,4 @@
 import express from "express";
-import Asset from "../models/Asset.js";
 import { authorizeRoles, verifyToken } from "../middleware/auth.js";
 import { createAsset, deleteAsset, getAssets, updateAsset } from "../controllers/assetController.js";
 
