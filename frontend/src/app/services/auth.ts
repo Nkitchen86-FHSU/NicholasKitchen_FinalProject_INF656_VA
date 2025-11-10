@@ -8,11 +8,23 @@ export class Auth {
 
   constructor(private http: HttpClient) {}
 
-  login(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, data);
+  login(credentials: { email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, credentials);
   }
 
   register(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, data);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+  }
+
+  saveToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 }
