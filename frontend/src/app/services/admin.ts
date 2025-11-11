@@ -9,7 +9,7 @@ export interface User {
 }
 
 @Injectable({ providedIn: 'root' })
-export class Admin {
+export class AdminService {
   private apiUrl = '/api/admin';
 
   constructor(private http: HttpClient) {}

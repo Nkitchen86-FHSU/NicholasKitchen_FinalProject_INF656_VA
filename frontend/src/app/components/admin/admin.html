@@ -1,1 +1,36 @@
-<p>admin works!</p>
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+    <h2>User Management</h2>
+
+    <form (ngSubmit)="createUser()" class="row g-3 mb-3">
+        <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Username" [(ngModel)]="newUser.username" name="username">
+        </div>
+        <div class="col-md-4">
+            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="newUser.password" name="password">
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" [(ngModel)]="newUser.role" name="role">
+                <option value="tech">Tech</option>
+                <option value="user">User</option>
+            </select>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-success w-100">Add</button>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead><tr>Username</tr><tr>Role</tr><tr>Actions</tr></thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{user.username}}</td>
+                <td>{{user.role}}</td>
+                <td>
+                    <button class="btn btn-sm btn-danger" (click)="deleteUser(user._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
