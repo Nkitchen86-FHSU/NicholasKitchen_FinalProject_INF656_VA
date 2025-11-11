@@ -9,7 +9,7 @@ router.get("/users", verifyToken, authorizeRoles("admin"), getAllUsers);
 
 router.post("/user", verifyToken, authorizeRoles("admin"), createUser);
 
-router.put("/user", verifyToken, authorizeRoles("admin"), updateUser)
+router.put("/user/:id", verifyToken, authorizeRoles("admin"), updateUser)
 
 router.delete("/user/:id", verifyToken, authorizeRoles("admin"), deleteUser);
 
