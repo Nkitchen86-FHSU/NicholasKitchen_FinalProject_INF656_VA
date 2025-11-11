@@ -1,1 +1,26 @@
-<p>assets works!</p>
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+    <h2>Assets</h2>
+    <button class="btn btn-primary mb-3" (click)="loadAssets()">Refresh</button>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th><th>Category</th><th>Serial</th><th>Assigned User</th><th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let asset of assets">
+                <td>{{asset.name}}</td>
+                <td>{{asset.category}}</td>
+                <td>{{asset.serial}}</td>
+                <td>{{asset.assignedUser}}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning me-2">Edit</button>
+                    <button class="btn btn-sm btn-danger" (click)="deleteAsset(asset._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
