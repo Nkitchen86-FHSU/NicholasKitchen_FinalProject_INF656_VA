@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { AdminService, User } from '../../services/admin'
+import { Navbar } from '../navbar/navbar';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
-  imports: [],
+  imports: [CommonModule, Navbar, FormsModule],
   templateUrl: './admin.html',
   styleUrl: './admin.css',
 })

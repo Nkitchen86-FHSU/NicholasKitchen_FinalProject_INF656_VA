@@ -22,7 +22,13 @@
     </form>
 
     <table class="table table-striped">
-        <thead><tr>Username</tr><tr>Role</tr><tr>Actions</tr></thead>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
         <tbody>
             <tr *ngFor="let user of users">
                 <td>{{user.username}}</td>

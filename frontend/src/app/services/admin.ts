@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface User {
-  _id?: string;
+  _id: string;
   username: string;
   role: 'admin' | 'tech' | 'user';
 }
@@ -18,7 +18,7 @@ export class AdminService {
     const token = localStorage.getItem('token');
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: token ? `Bearer ${token}` : '',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     });
   }
 

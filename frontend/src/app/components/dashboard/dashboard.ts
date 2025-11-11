@@ -1,9 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Chart } from 'chart.js';
+import { Chart, ArcElement, Tooltip, Legend, Title, DoughnutController } from 'chart.js';
+import { Navbar } from '../navbar/navbar';
+
+Chart.register(ArcElement, Tooltip, Legend, Title, DoughnutController);
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [CommonModule, Navbar],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })

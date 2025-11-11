@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Asset } from '../../services/asset';
+import { CommonModule } from '@angular/common';
+import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-assets',
-  imports: [],
+  imports: [CommonModule, Navbar],
   templateUrl: './assets.html',
   styleUrl: './assets.css',
 })
