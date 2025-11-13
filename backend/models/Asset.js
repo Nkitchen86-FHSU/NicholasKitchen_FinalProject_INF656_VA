@@ -5,10 +5,9 @@ const assetSchema = new mongoose.Schema({
     category: String,
     serialNumber: String,
     assignedUser: String,
-    purchasedDate: Date,
+    purchaseDate: Date,
     warranty: String,
-    condition: String,
-    status: { type: String, default: "active" }
+    status: { type: String, default: "Active" }
 }, { timestamp: true });
 
 export default mongoose.model("Asset", assetSchema);
