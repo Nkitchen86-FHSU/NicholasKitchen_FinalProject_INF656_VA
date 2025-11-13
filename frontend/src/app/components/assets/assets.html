@@ -3,19 +3,78 @@
 <div class="container mt-4">
     <h2>Assets</h2>
     <button class="btn btn-primary mb-3" (click)="loadAssets()">Refresh</button>
+    <button class="btn btn-secondary mb-3 ms-3" data-bs-toggle="modal" data-bs-target="#createAssetModal">Add Asset</button>
+    <!-- Modal For Creating Asset-->
+    <div class="modal" id="createAssetModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create an Asset</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="createAsset()" class="row g-3 mb-3">
+                        <div>
+                            <input type="text" class="form-control" placeholder="Name" [(ngModel)]="newAsset.name" name="name" required>
+                        </div>
+                        <div>
+                            <p>Category: </p>
+                            <select type="form-select" [(ngModel)]="newAsset.category" name="category" required>
+                                <option value="Desktop">Desktop</option>
+                                <option value="Laptop">Laptop</option>
+                                <option value="Monitor">Monitor</option>
+                                <option value="Peripheral">Peripheral</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="text" class="form-control" placeholder="Serial Number" [(ngModel)]="newAsset.serialNumber" name="serialNumber">
+                        </div>
+                        <div>
+                            <p>Assigned User: </p>
+                            <select type="form-select" [(ngModel)]="newAsset.assignedUser" name="assignedUser" required>
+                                <option value="">-- Unassigned --</option>
+                                <option *ngFor="let user of users" [value]="user.username">{{ user.username }}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="text" class="form-control" placeholder="Purchase Date" [(ngModel)]="newAsset.purchaseDate" name="purchaseDate">
+                        </div>
+                        <div>
+                            <input type="text" class="form-control" placeholder="Warranty" [(ngModel)]="newAsset.warranty" name="warranty">
+                        </div>
+                        <div>
+                            <p>Status: </p>
+                            <select type="form-select" [(ngModel)]="newAsset.status" name="status" required>
+                                <option value="Active">Active</option>
+                                <option value="Maintenance">Maintenance</option>
+                                <option value="Decomissioned">Decomissioned</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button class="btn btn-success w-100" data-bs-dismiss="modal">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Name</th><th>Category</th><th>Serial</th><th>Assigned User</th><th>Actions</th>
+                <th>Name</th><th>Category</th><th>Serial</th><th>Assigned User</th><th>Purchase Date</th><th>Warranty</th><th>Status</th><th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let asset of assets">
                 <td>{{asset.name}}</td>
                 <td>{{asset.category}}</td>
-                <td>{{asset.serial}}</td>
+                <td>{{asset.serialNumber}}</td>
                 <td>{{asset.assignedUser}}</td>
+                <td>{{asset.purchaseDate}}</td>
+                <td>{{asset.warranty}}</td>
+                <td>{{asset.status}}</td>
                 <td>
                     <button class="btn btn-sm btn-warning me-2">Edit</button>
                     <button class="btn btn-sm btn-danger" (click)="deleteAsset(asset._id)">Delete</button>
