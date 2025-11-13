@@ -3,17 +3,17 @@
 <div class="container mt-4">
     <h2>Assets</h2>
     <button class="btn btn-primary mb-3" (click)="loadAssets()">Refresh</button>
-    <button class="btn btn-secondary mb-3 ms-3" data-bs-toggle="modal" data-bs-target="#createAssetModal">Add Asset</button>
+    <button class="btn btn-secondary mb-3 ms-3" data-bs-toggle="modal" data-bs-target="#assetFormModal">Add Asset</button>
     <!-- Modal For Creating Asset-->
-    <div class="modal" id="createAssetModal" tabindex="-1">
+    <div class="modal" id="assetFormModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Create an Asset</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="finishSave()"></button>
                 </div>
                 <div class="modal-body">
-                    <form (ngSubmit)="createAsset()" class="row g-3 mb-3">
+                    <form (ngSubmit)="saveAsset()" class="row g-3 mb-3">
                         <div>
                             <input type="text" class="form-control" placeholder="Name" [(ngModel)]="newAsset.name" name="name" required>
                         </div>
@@ -52,7 +52,7 @@
                             </select>
                         </div>
                         <div>
-                            <button class="btn btn-success w-100" data-bs-dismiss="modal">Add</button>
+                            <button class="btn btn-success w-100" data-bs-dismiss="modal">{{ editingId ? "Save Changes" : "Add Asset" }}</button>
                         </div>
                     </form>
                 </div>
@@ -76,7 +76,7 @@
                 <td>{{asset.warranty}}</td>
                 <td>{{asset.status}}</td>
                 <td>
-                    <button class="btn btn-sm btn-warning me-2">Edit</button>
+                    <button class="btn btn-sm btn-warning me-2" (click)="openEditModal(asset)" data-bs-toggle="modal" data-bs-target="#assetFormModal">Edit</button>
                     <button class="btn btn-sm btn-danger" (click)="deleteAsset(asset._id)">Delete</button>
                 </td>
             </tr>

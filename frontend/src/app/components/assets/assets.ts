@@ -14,6 +14,7 @@ import { AdminService, User } from '../../services/admin';
 export class Assets implements OnInit {
   assets: Asset[] = [];
   users: User[] = [];
+  editingId: string | null=null;
   newAsset = { name: '', category: '', serialNumber: '', assignedUser: '', purchaseDate: '', warranty: '', status: 'Active'};
 
   constructor(
@@ -46,6 +47,31 @@ export class Assets implements OnInit {
       this.loadAssets();
     });
   }
+
+  openEditModal(asset: Asset) {
+    this.editingId = asset._id;
+
+    this.newAsset = {...asset };
+  }
+
+  saveAsset() {
+    if (this.editingId) {
+      this.assetService.updateAsset(this.editingId, this.newAsset).subscribe(() => {
+        this.finishSave();
+      });
+    } else {
+      this.assetService.createAsset(this.newAsset).subscribe(() => {
+        this.finishSave();
+      });
+    }
+  }
+
+  finishSave() {
+    this.newAsset = { name: '', category: '', serialNumber: '', assignedUser: '', purchaseDate: '', warranty: '', status: 'Active'};
+    this.editingId = null;
+    this.loadAssets();
+  }
+  
 
   deleteAsset(id: string) {
     if (!confirm('Delete this asset?')) return;
