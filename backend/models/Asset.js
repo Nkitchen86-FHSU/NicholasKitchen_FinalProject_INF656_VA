@@ -8,6 +8,6 @@ const assetSchema = new mongoose.Schema({
     purchaseDate: Date,
     warranty: String,
     status: { type: String, default: "active" }
-}, { timestamp: true });
+}, { timestamps: true });
 
 export default mongoose.model("Asset", assetSchema);
