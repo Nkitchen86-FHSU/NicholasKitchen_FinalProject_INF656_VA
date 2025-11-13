@@ -50,7 +50,6 @@ export class Assets implements OnInit {
 
   openEditModal(asset: Asset) {
     this.editingId = asset._id;
-
     this.newAsset = {...asset };
   }
 
