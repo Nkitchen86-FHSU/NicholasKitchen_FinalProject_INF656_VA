@@ -4,6 +4,20 @@
     <h2>Assets</h2>
     <button class="btn btn-primary mb-3" (click)="loadAssets()">Refresh</button>
     <button class="btn btn-secondary mb-3 ms-3" data-bs-toggle="modal" data-bs-target="#assetFormModal">Add Asset</button>
+    <div class="mb-3 ms-3">
+        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+            Sort
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="sortOption='name-asc'; sortAssets()">Name A - Z</a></li>
+            <li><a class="dropdown-item" (click)="sortOption='name-desc'; sortAssets()">Name Z - A</a></li>
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li><a class="dropdown-item" (click)="sortOption='date-asc'; sortAssets()">Purchase Date Asc</a></li>
+            <li><a class="dropdown-item" (click)="sortOption='date-desc'; sortAssets()">Purchase Date Desc</a></li>
+        </ul>
+    </div>
     <!-- Modal For Creating Asset-->
     <div class="modal" id="assetFormModal" tabindex="-1">
         <div class="modal-dialog">
