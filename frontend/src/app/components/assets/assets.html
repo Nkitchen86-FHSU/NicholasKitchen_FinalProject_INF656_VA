@@ -2,22 +2,52 @@
 
 <div class="container mt-4">
     <h2>Assets</h2>
-    <button class="btn btn-primary mb-3" (click)="loadAssets()">Refresh</button>
-    <button class="btn btn-secondary mb-3 ms-3" data-bs-toggle="modal" data-bs-target="#assetFormModal">Add Asset</button>
-    <div class="mb-3 ms-3">
-        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-            Sort
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="sortOption='name-asc'; sortAssets()">Name A - Z</a></li>
-            <li><a class="dropdown-item" (click)="sortOption='name-desc'; sortAssets()">Name Z - A</a></li>
 
-            <li><hr class="dropdown-divider"></li>
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div class="d-flex gap-3">
+            <!-- Dropdown For Sorting -->
+            <div class="mb-3">
+                <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    Sort
+                </button>
+                <ul class="dropdown-menu p-3">
+                    <li><a class="dropdown-item" (click)="sortOption='name-asc'; sortAssets()">Name A - Z</a></li>
+                    <li><a class="dropdown-item" (click)="sortOption='name-desc'; sortAssets()">Name Z - A</a></li>
 
-            <li><a class="dropdown-item" (click)="sortOption='date-asc'; sortAssets()">Purchase Date Asc</a></li>
-            <li><a class="dropdown-item" (click)="sortOption='date-desc'; sortAssets()">Purchase Date Desc</a></li>
-        </ul>
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li><a class="dropdown-item" (click)="sortOption='date-asc'; sortAssets()">Purchase Date Asc</a></li>
+                    <li><a class="dropdown-item" (click)="sortOption='date-desc'; sortAssets()">Purchase Date Desc</a></li>
+                </ul>
+            </div>
+
+            <!-- Dropdown For Filtering -->
+            <div class="mb-3">
+                <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    Filter
+                </button>
+                <div class="dropdown-menu p-3">
+                    <strong>Category</strong>
+                    <div *ngFor="let cat of ['Desktop','Laptop','Monitor','Peripheral','Other']">
+                        <input type="checkbox" (change)="toggleFilter(filter.categories, cat)"> {{ cat }}
+                    </div>
+                    <strong>Assigned User</strong>
+                    <div *ngFor="let u of users">
+                        <input type="checkbox" (change)="toggleFilter(filter.users, u.username)"> {{ u.username }}
+                    </div>
+                    <strong>Status</strong>
+                    <div *ngFor="let status of ['Active','Maintenance','Decomissioned']">
+                        <input type="checkbox" (change)="toggleFilter(filter.status, status)"> {{ status }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex gap-3">
+            <button class="btn btn-secondary mb-3" (click)="loadAssets()">Refresh</button>
+            <button class="btn btn-success mb-3 ms-3" data-bs-toggle="modal" data-bs-target="#assetFormModal">Add Asset</button>            
+        </div>
     </div>
+
     <!-- Modal For Creating Asset-->
     <div class="modal" id="assetFormModal" tabindex="-1">
         <div class="modal-dialog">
@@ -74,6 +104,7 @@
         </div>
     </div>
 
+    <!-- Table to Display Asset Information -->
     <table class="table table-bordered">
         <thead>
             <tr>

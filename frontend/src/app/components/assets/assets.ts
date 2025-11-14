@@ -116,8 +116,8 @@ export class Assets implements OnInit {
   filterAssets() {
     this.assets = this.originalAssets.filter(asset => {
       const categoryMatch = this.filter.categories.size === 0 || this.filter.categories.has(asset.category);
-      const assignedUserMatch = this.filter.categories.size === 0 || this.filter.categories.has(asset.assignedUser);
-      const statusMatch = this.filter.categories.size === 0 || this.filter.categories.has(asset.status);
+      const assignedUserMatch = this.filter.users.size === 0 || this.filter.users.has(asset.assignedUser || '');
+      const statusMatch = this.filter.status.size === 0 || this.filter.status.has(asset.status);
 
       return categoryMatch && assignedUserMatch && statusMatch;
     });
