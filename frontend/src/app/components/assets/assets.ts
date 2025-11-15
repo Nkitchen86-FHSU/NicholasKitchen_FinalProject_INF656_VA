@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AssetService, Asset } from '../../services/asset';
 import { CommonModule } from '@angular/common';
 import { Navbar } from '../navbar/navbar';
@@ -27,7 +27,8 @@ export class Assets implements OnInit {
 
   constructor(
     private assetService: AssetService, 
-    private adminService: AdminService
+    private adminService: AdminService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   // Load assets and users on initilization.
@@ -42,6 +43,7 @@ export class Assets implements OnInit {
       next: (res) => {
         this.assets = res as any[];
         this.originalAssets = [ ...this.assets ];
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Failed to load assets', err)
     });
@@ -50,7 +52,10 @@ export class Assets implements OnInit {
   // Load all users from MongoDB
   loadUsers() {
     this.adminService.getAllUsers().subscribe({
-      next: (res) => this.users = res as any[],
+      next: (res) => {
+        this.users = res as any[];
+        this.cdr.detectChanges();
+      },
       error: (err) => console.error('Failed to load assets', err)
     });
   }
