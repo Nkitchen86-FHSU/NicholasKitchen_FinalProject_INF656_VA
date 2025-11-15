@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Chart, ArcElement, Tooltip, Legend, Title, DoughnutController } from 'chart.js';
 import { Navbar } from '../navbar/navbar';
 import { AssetService, Asset } from '../../services/asset';
 
 Chart.register(ArcElement, Tooltip, Legend, Title, DoughnutController);
-
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -13,9 +12,13 @@ Chart.register(ArcElement, Tooltip, Legend, Title, DoughnutController);
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard implements OnInit {
+export class Dashboard implements OnInit, AfterViewInit {
   assets: Asset[] = [];
-  chart: any;
+
+  @ViewChild('assetChart') chartCanvas!: ElementRef<HTMLCanvasElement>;
+
+  chart: Chart | null = null;
+  viewReady = false;
 
   constructor(
     private assetService: AssetService,
@@ -26,15 +29,26 @@ export class Dashboard implements OnInit {
     this.loadAssets();
   }
 
+  ngAfterViewInit() {
+    this.viewReady=true;
+    this.tryBuildChart();
+  }
+
   loadAssets() {
     this.assetService.getAssets().subscribe({
       next: (res) => {
         this.assets = res as any[];
         this.cdr.detectChanges();
-        this.buildChart();
+        this.tryBuildChart();
       },
       error: (err) => console.error('Failed to load assets', err)
     });
+  }
+
+  tryBuildChart() {
+    if (this.viewReady && this.assets.length > 0) {
+      this.buildChart();
+    }
   }
 
   buildChart() {
@@ -43,9 +57,9 @@ export class Dashboard implements OnInit {
     const maintenance = this.assets.filter( a => a.status==='Maintenance').length;
     const decommissioned = this.assets.filter( a => a.status==='Decommissioned').length;
 
-    if (!this.chart) this.chart.destroy();
+    if (this.chart) this.chart.destroy();
 
-    this.chart = new Chart('assetChart', {
+    this.chart = new Chart(this.chartCanvas.nativeElement, {
       type: 'doughnut',
       data: {
         labels: ['Active', 'Maintenance', 'Decommissioned'],
