@@ -36,7 +36,7 @@
                         <input type="checkbox" (change)="toggleFilter(filter.users, u.username)"> {{ u.username }}
                     </div>
                     <strong>Status</strong>
-                    <div *ngFor="let status of ['Active','Maintenance','Decomissioned']">
+                    <div *ngFor="let status of ['Active','Maintenance','Decommissioned']">
                         <input type="checkbox" (change)="toggleFilter(filter.status, status)"> {{ status }}
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                             <select type="form-select" [(ngModel)]="newAsset.status" name="status" required>
                                 <option value="Active">Active</option>
                                 <option value="Maintenance">Maintenance</option>
-                                <option value="Decomissioned">Decomissioned</option>
+                                <option value="Decommissioned">Decommissioned</option>
                             </select>
                         </div>
                         <div>
