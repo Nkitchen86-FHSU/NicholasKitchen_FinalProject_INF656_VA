@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminService, User } from '../../services/admin'
 import { Navbar } from '../navbar/navbar';
@@ -14,7 +14,10 @@ export class Admin implements OnInit{
   users: User[] = [];
   newUser = { username: '', password: '', role: 'user' };
 
-  constructor(private adminService: AdminService) {}
+  constructor(
+    private adminService: AdminService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.loadUsers();
@@ -22,7 +25,10 @@ export class Admin implements OnInit{
 
   loadUsers() {
     this.adminService.getAllUsers().subscribe({
-      next: (res) => this.users = res,
+      next: (res) => {
+        this.users = res;
+        this.cdr.detectChanges();
+      },
       error: (err) => console.error('Error loading users', err),
     });
   }

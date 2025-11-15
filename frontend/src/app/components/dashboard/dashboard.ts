@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Chart, ArcElement, Tooltip, Legend, Title, DoughnutController } from 'chart.js';
 import { Navbar } from '../navbar/navbar';
 import { AssetService, Asset } from '../../services/asset';
@@ -17,7 +17,10 @@ export class Dashboard implements OnInit {
   assets: Asset[] = [];
   chart: any;
 
-  constructor(private assetService: AssetService) {}
+  constructor(
+    private assetService: AssetService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.loadAssets();
@@ -27,6 +30,7 @@ export class Dashboard implements OnInit {
     this.assetService.getAssets().subscribe({
       next: (res) => {
         this.assets = res as any[];
+        this.cdr.detectChanges();
         this.buildChart();
       },
       error: (err) => console.error('Failed to load assets', err)
