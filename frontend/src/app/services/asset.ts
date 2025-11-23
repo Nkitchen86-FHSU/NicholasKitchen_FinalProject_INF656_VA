@@ -7,12 +7,14 @@ export interface Asset {
   name: string;
   category: string;
   serialNumber: string;
-  condition: string;
   assignedUser: string;
+  purchaseDate: string;
+  warranty: string;
+  status: string;
 }
 
 @Injectable({ providedIn: 'root', })
-export class Asset {
+export class AssetService {
   private apiUrl = '/api/assets';
 
   constructor(private http: HttpClient) {}
