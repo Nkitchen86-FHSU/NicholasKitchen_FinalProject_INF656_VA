@@ -1,4 +1,4 @@
-# NicholasKitchen_FinalProject_INF656_VA
+### NicholasKitchen_FinalProject_INF656_VA
 ### Nicholas Kitchen
 ### Final Project
  
@@ -13,7 +13,7 @@ TrackIT is an asset management system using the MEAN Stack. There are three user
  
 ## Getting Started
 
-**You will need to have two consoles open to run the program. One will be for the backend, and the other for the frontend**
+**You will need to have two consoles open to run the program. One will be for the backend, and the other for the frontend.**
 
 ### Frontend
 
