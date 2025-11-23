@@ -3,25 +3,79 @@
 <div class="container mt-4">
     <h2>User Management</h2>
 
-    <form (ngSubmit)="createUser()" class="row g-3 mb-3">
-        <div class="col-md-4">
-            <input type="text" class="form-control" placeholder="Username" [(ngModel)]="newUser.username" name="username">
-        </div>
-        <div class="col-md-4">
-            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="newUser.password" name="password">
-        </div>
-        <div class="col-md-3">
-            <select class="form-select" [(ngModel)]="newUser.role" name="role">
-                <option value="tech">Tech</option>
-                <option value="user">User</option>
-            </select>
-        </div>
-        <div class="col-md-1">
-            <button class="btn btn-success w-100">Add</button>
-        </div>
-    </form>
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div class="d-flex gap-3">
+            <!-- Dropdown For Sorting -->
+            <div class="mb-3">
+                <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    Sort
+                </button>
+                <ul class="dropdown-menu p-3">
+                    <li><a class="dropdown-item" (click)="sortOption='username-asc'; sortUsers()">Username A - Z</a></li>
+                    <li><a class="dropdown-item" (click)="sortOption='username-desc'; sortUsers()">Username Z - A</a></li>
 
-    <table class="table table-striped">
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li><a class="dropdown-item" (click)="sortOption='role-asc'; sortUsers()">Role Asc</a></li>
+                    <li><a class="dropdown-item" (click)="sortOption='role-desc'; sortUsers()">Role Desc</a></li>
+                </ul>
+            </div>
+
+            <!-- Dropdown For Filtering -->
+            <div class="mb-3">
+                <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    Filter
+                </button>
+                <div class="dropdown-menu p-3">
+                    <strong>Role</strong>
+                    <div *ngFor="let role of ['user','tech','admin']">
+                        <input type="checkbox" (change)="toggleFilter(filter.role, role)"> {{ role }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex gap-3">
+            <button class="btn btn-secondary mb-3" (click)="loadUsers()">Refresh</button>
+            <button class="btn btn-success mb-3 ms-3" data-bs-toggle="modal" data-bs-target="#userFormModal">Add User</button>          
+        </div>
+    </div>
+
+
+    <!-- Modal For Creating User-->
+    <div class="modal" id="userFormModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ editingId ? 'Edit User' : 'Create User' }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="finishSave()"></button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="saveUser()" class="row g-3 mb-3">
+                        <div>
+                            <input type="text" class="form-control" placeholder="Username" [(ngModel)]="newUser.username" name="username" required>
+                        </div>
+                        <div>
+                            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="newUser.password" name="password" required>
+                        </div>
+                        <div>
+                            <p>Role: </p>
+                            <select type="form-select" [(ngModel)]="newUser.role" name="role" required>
+                                <option value="user">user</option>
+                                <option value="tech">tech</option>
+                                <option value="admin">admin</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <button class="btn btn-success w-100" data-bs-dismiss="modal">{{ editingId ? "Save Changes" : "Add User" }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Username</th>
@@ -34,6 +88,7 @@
                 <td>{{user.username}}</td>
                 <td>{{user.role}}</td>
                 <td>
+                    <button class="btn btn-sm btn-warning me-2" (click)="openEditModal(user)" data-bs-toggle="modal" data-bs-target="#userFormModal">Edit</button>
                     <button class="btn btn-sm btn-danger" (click)="deleteUser(user._id)">Delete</button>
                 </td>
             </tr>
