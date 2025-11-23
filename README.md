@@ -63,6 +63,8 @@ The frontend console should give you the link to your localhost.
 ## Authors
  
 Nicholas Kitchen
+> [!IMPORTANT]
+> I realize that when I was using my work laptop I did not switch the GitHub account from my work to my personal GitHub account. This means that there are a stretch of commits made in the middle of the week by Tech Helpdesk. This note is just to explain why there is another account making commits. If this is an issue and evidence is needed, then please let me know.
  
 ## Version History
 
