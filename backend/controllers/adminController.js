@@ -28,7 +28,7 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { username, role } = req.body;
+        const { username, role, password } = req.body;
 
         if (role && !["user", "tech", "admin"].includes(role)) {
             return res.status(400).json({ message: "Invalid role specified" });
@@ -43,9 +43,14 @@ export const updateUser = async (req, res) => {
 
         if (username) user.username = username;
         if (role) user.role = role;
+        if (password) user.password = password;
+
         await user.save();
 
-        res.json({ message: "User updated successfully", user });
+        const sanitizedUser = user.toObject();
+        delete sanitizedUser.password;
+
+        res.json({ message: "User updated successfully", sanitizedUser });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
